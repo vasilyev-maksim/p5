@@ -1,6 +1,7 @@
 {
   "name": "p5js-vite-ts-boilerplate",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
