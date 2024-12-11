@@ -6,15 +6,21 @@ import { Matrix } from "./Matrix";
 import { Turtle } from "./Turtle";
 import { IRectangle } from "./Rectangle";
 import { StaggerAnimation } from "./StaggerAnimation";
+import { getQsParam } from "./utils";
 
 const sketch = (p: p5) => {
-  const WIDTH = 1200,
-    HEIGHT = 800,
-    GRID_SIZE = new Size(30, 20),
+  const GRID_CELLS_Y = Number(getQsParam("y", "20")),
+    WIDTH = window.innerWidth - 50,
+    HEIGHT = window.innerHeight - 50,
+    GRID_SIZE = new Size(
+      Math.round((GRID_CELLS_Y * window.innerWidth) / window.innerHeight),
+      GRID_CELLS_Y
+    ),
     GRID_ORIGIN = new Point(
       window.innerWidth / 2 - WIDTH / 2,
       window.innerHeight / 2 - HEIGHT / 2
     ),
+    MAX_AREA = 0.08,
     grid = new Grid(p, {
       origin: GRID_ORIGIN,
       gridSizeInPixels: new Size(WIDTH, HEIGHT),
@@ -35,8 +41,9 @@ const sketch = (p: p5) => {
   const spawnTurtle = () => {
     const randomOrigin = matrix.getRandomTrue();
     if (!randomOrigin) {
-      return;
+      return false;
     }
+
     const turtle = new Turtle(randomOrigin, {
       isForwardPossible: (cell) => {
         return matrix.get(cell);
@@ -56,18 +63,15 @@ const sketch = (p: p5) => {
       rectEvaluator: (rect) => {
         const area = rect.getArea();
         const gridArea = GRID_SIZE.getArea();
-        const maxArea = 0.08 * gridArea;
+        const maxArea = MAX_AREA * gridArea;
 
         if (area > maxArea || rect.getAspectRatio() > 2) return 0;
 
-        return area;
+        return maxArea - area;
       },
     });
 
-    turtle.moveInRandomDirection();
-
-    // p.draw();
-
+    turtle.coverRandomRectangle();
     return true;
   };
 
@@ -79,24 +83,37 @@ const sketch = (p: p5) => {
     p.fill("#AAA");
     p.strokeWeight(2);
 
-    rectsToDraw.forEach((cellRect, i, arr) => {
-      const canvasRect = grid.getCanvasRectangleFromVertexCells(cellRect);
-      const scale = animation.getAnimationProgress(p.frameCount, i);
-      const color = p.lerpColor(
-        p.color("white"),
-        p.color("red"),
-        i / arr.length
-      );
-      p.fill(color);
-      const scaledRect = canvasRect.scale(scale);
-      p.strokeWeight(1);
-      p.rect(
-        scaledRect.topLeft.x,
-        scaledRect.topLeft.y,
-        scaledRect.width - 2, // TODO: fix this (-2)
-        scaledRect.height - 2
-      );
-    });
+    const reverse = getQsParam("r", "1") === "1";
+
+    (reverse ? rectsToDraw.slice().reverse() : rectsToDraw).forEach(
+      (cellRect, i, arr) => {
+        const canvasRect = grid.getCanvasRectangleFromVertexCells(cellRect);
+        const scale = animation.getAnimationProgress(p.frameCount, i);
+        const colorValue = p.map(1 - i / arr.length, 0, 1, 0.1, 0.75);
+        // const area = cellRect.getArea();
+        // const gridArea = GRID_SIZE.getArea();
+
+        const color = p.lerpColor(
+          p.color("white"),
+          i % 3 == 0
+            ? p.color("red")
+            : i % 3 == 1
+            ? p.color("teal")
+            : p.color("purple"),
+          reverse ? colorValue : 1 - colorValue
+          // 1 - area / (MAX_AREA * gridArea)
+        );
+        p.fill(color);
+        const scaledRect = canvasRect.scale(scale);
+        p.strokeWeight(1);
+        p.rect(
+          scaledRect.topLeft.x,
+          scaledRect.topLeft.y,
+          scaledRect.width - 2, // TODO: fix this (-2)
+          scaledRect.height - 2
+        );
+      }
+    );
   };
 };
 

@@ -46,6 +46,11 @@ export class Grid {
             this.p.textAlign(this.p.CENTER);
             this.p.strokeWeight(1);
             this.p.text(cx, x - this.config.cellSize.width / 2, -5);
+            this.p.text(
+              cx,
+              x - this.config.cellSize.width / 2,
+              this.config.gridSizeInPixels.height + 15
+            );
           }
           this.p.pop();
         }
@@ -63,6 +68,12 @@ export class Grid {
             this.p.textAlign(this.p.RIGHT);
             this.p.strokeWeight(1);
             this.p.text(cy, -5, y - this.config.cellSize.height / 2 + 5);
+            this.p.textAlign(this.p.LEFT);
+            this.p.text(
+              cy,
+              this.config.gridSizeInPixels.width + 5,
+              y - this.config.cellSize.height / 2 + 5
+            );
           }
           this.p.pop();
         }

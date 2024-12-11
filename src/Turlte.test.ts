@@ -33,9 +33,6 @@ describe("Turtle", () => {
       const matrix = new Matrix(new Size(5, 5));
 
       const sut = new Turtle(new Point(originX, originY), {
-        // onMove: async (cell) => {
-        //   matrix.set(cell, false);
-        // },
         isForwardPossible: (cell) => {
           return matrix.get(cell);
         },
@@ -94,53 +91,6 @@ describe("Turtle", () => {
         [3, 2],
       ],
     },
-    // {
-    //   fieldSize: new Size(4, 4),
-    //   originX: 4,
-    //   originY: 4,
-    //   occupied: [
-    //     [3, 1],
-    //     [3, 2],
-    //     [3, 3],
-    //     [3, 4],
-    //   ],
-    //   expected: [[4, 1]],
-    // },
-    // {
-    //   fieldSize: new Size(4, 4),
-    //   originX: 4,
-    //   originY: 4,
-    //   occupied: [
-    //     [1, 3],
-    //     [2, 3],
-    //     [3, 3],
-    //     [4, 3],
-    //   ],
-    //   expected: [[1, 4]],
-    // },
-    // {
-    //   fieldSize: new Size(4, 4),
-    //   originX: 2,
-    //   originY: 2,
-    //   occupied: [
-    //     // [1, 3],
-    //     // [2, 3],
-    //     // [3, 3],
-    //     // [4, 3],
-    //   ],
-    //   expected: [[1, 4]],
-    // },
-    // {
-    //   fieldSize: new Size(4, 4),
-    //   originX: 1,
-    //   originY: 1,
-    //   occupied: [
-    //     [2, 1],
-    //     [2, 2],
-    //     [1, 2],
-    //   ],
-    //   expected: [[1, 1]],
-    // },
     {
       fieldSize: new Size(4, 4),
       originX: 1,
@@ -174,9 +124,6 @@ describe("Turtle", () => {
 
       const origin = new Point(originX, originY);
       const sut = new Turtle(origin, {
-        // onMove: async (cell) => {
-        //   matrix.set(cell, false);
-        // },
         isForwardPossible: (cell) => {
           return !!matrix.get(cell);
         },

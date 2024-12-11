@@ -4,7 +4,6 @@ import { IRectangle, Rectangle } from "./Rectangle";
 import { Vector } from "./Vector";
 
 interface IProviders {
-  // onMove: (cell: IPoint) => Promise<void>;
   onCommit: (rectangle: IRectangle) => void;
   isForwardPossible: (cell: IPoint) => boolean;
   rectEvaluator: (rect: IRectangle) => number;
@@ -12,75 +11,16 @@ interface IProviders {
 
 export class Turtle {
   public start: IPoint;
-  // public end: IPoint;
-  // public direction: Vector;
-  public movesLimit: number;
-  public moves: number;
 
   constructor(public origin: IPoint, private providers: IProviders) {
     this.start = origin.clone();
-    // this.end = origin.clone();
-
-    // this.direction =
-    //   providers?.getRandomDirection?.() ?? Turtle.getRandomDirection();
     this.providers = providers;
-    this.movesLimit = 10;
-    this.moves = 0;
   }
 
-  // async forward() {
-  //   this.end = this.end.add(this.direction);
-  //   // await this.providers.onMove(this.end);
-  // }
-
-  // static getRandomDirection() {
-  //   const directions = [
-  //     [1, 1],
-  //     [1, -1],
-  //     [-1, 1],
-  //     [-1, -1],
-  //   ] as [number, number][];
-  //   return new Vector(
-  //     ...directions[Math.floor(Math.random() * directions.length)]
-  //   );
-  // }
-
-  // findValidDirection() {
-  //   let i = 0;
-
-  //   while (i < 4) {
-  //     // debugger;
-  //     if (!this.isForwardPossible(this.end)) {
-  //       this.turnLeft();
-  //       i++;
-  //     } else {
-  //       break;
-  //     }
-  //   }
-
-  //   return i < 4;
-  // }
-
-  // isForwardPossible(origin: IPoint) {
-  //   return (
-  //     this.direction &&
-  //     this.providers.isForwardPossible(origin.add(this.direction))
-  //   );
-  // }
-
-  // travelRandomRectangle() {
-  //   const direction = this.findValidDiagonalDirection();
-  //   const variations = this.getRectangleVariations(direction);
-  // }
-
-  async moveInRandomDirection() {
+  coverRandomRectangle() {
     const rects = this.getRectangleVariations();
     this.providers.onCommit(rects[0]);
   }
-
-  // turnLeft() {
-  //   this.direction = new Vector(this.direction.x, -this.direction.y);
-  // }
 
   getEmptyPathLengthByDirection(direction: Vector) {
     if (direction.getLength() === 0) return 0;
@@ -101,27 +41,43 @@ export class Turtle {
   }
 
   getRectangleVariations() {
-    const origin = this.start;
-    let maxY = origin.y + this.getEmptyPathLengthByDirection(new Vector(0, 1));
-    const maxX =
-      origin.x + this.getEmptyPathLengthByDirection(new Vector(1, 0));
+    return [
+      ...this.getRectangleVariationsByDirection(new Vector(1, 1)),
+      ...this.getRectangleVariationsByDirection(new Vector(-1, 1)),
+      ...this.getRectangleVariationsByDirection(new Vector(1, -1)),
+      ...this.getRectangleVariationsByDirection(new Vector(-1, -1)),
+    ];
+  }
+
+  getRectangleVariationsByDirection(direction: Vector) {
+    const directionX = direction.x;
+    const directionY = direction.y;
+
+    let maxDY = this.getEmptyPathLengthByDirection(direction.getYComponent());
+    const maxDX = this.getEmptyPathLengthByDirection(direction.getXComponent());
     const variations = [];
 
-    for (let x = origin.x + 1; x <= maxX; x++) {
-      for (let y = origin.y + 1; y <= maxY; y++) {
+    for (let dx = 1; dx <= maxDX; dx++) {
+      const x = this.start.x + dx * directionX;
+      for (let dy = 1; dy <= maxDY; dy++) {
+        const y = this.start.y + dy * directionY;
         const isEmpty = this.providers.isForwardPossible(new Point(x, y));
         if (!isEmpty) {
-          const newMaxY = y - 1;
-          if (newMaxY < maxY) {
-            variations.push(new Point(x - 1, maxY));
+          const newMaxDY = dy - 1;
+          if (newMaxDY < maxDY) {
+            variations.push(
+              new Point(x - directionX, this.start.y + maxDY * directionY)
+            );
           }
-          maxY = newMaxY;
+          maxDY = newMaxDY;
           break;
         }
       }
     }
 
-    variations.push(new Point(maxX, maxY));
+    variations.push(
+      this.start.add(new Point(maxDX * directionX, maxDY * directionY))
+    );
 
     return variations
       .map((x) => {
