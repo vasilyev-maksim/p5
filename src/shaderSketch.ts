@@ -8,7 +8,7 @@ const sketch = (p: p5) => {
   p.setup = () => {
     console.log(innerWidth, innerHeight);
 
-    const canvas = p.createCanvas(innerWidth, innerHeight, p.WEBGL);
+    // const canvas = p.createCanvas(innerWidth, innerHeight, p.WEBGL);
     // canvas.position(0, 0);
     myShader = createShader(p);
   };
