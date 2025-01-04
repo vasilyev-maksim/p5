@@ -6,7 +6,7 @@ import { Matrix } from "./Matrix";
 import { Turtle } from "./Turtle";
 import { IRectangle } from "./Rectangle";
 import { StaggerAnimation } from "./StaggerAnimation";
-import { getQsParam } from "./utils";
+import { easeInOutQuad, getQsParam } from "./utils";
 
 const sketch = (p: p5) => {
   const GRID_CELLS_Y = Number(getQsParam("y", "20")),
@@ -29,7 +29,7 @@ const sketch = (p: p5) => {
     }),
     matrix = new Matrix(GRID_SIZE),
     rectsToDraw: IRectangle[] = [],
-    animation: StaggerAnimation = new StaggerAnimation(6);
+    animation: StaggerAnimation = new StaggerAnimation(12);
 
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
@@ -79,7 +79,7 @@ const sketch = (p: p5) => {
 
   p.draw = () => {
     p.background("black");
-    grid.render();
+    // grid.render();
     p.fill("#AAA");
     p.strokeWeight(2);
 
@@ -88,7 +88,10 @@ const sketch = (p: p5) => {
     (reverse ? rectsToDraw.slice().reverse() : rectsToDraw).forEach(
       (cellRect, i, arr) => {
         const canvasRect = grid.getCanvasRectangleFromVertexCells(cellRect);
-        const scale = animation.getAnimationProgress(p.frameCount, i);
+        const animationProgress = animation.getAnimationProgress(
+          p.frameCount,
+          i
+        );
         const colorValue = p.map(1 - i / arr.length, 0, 1, 0.1, 0.75);
         // const area = cellRect.getArea();
         // const gridArea = GRID_SIZE.getArea();
@@ -104,13 +107,16 @@ const sketch = (p: p5) => {
           // 1 - area / (MAX_AREA * gridArea)
         );
         p.fill(color);
+        const scale = easeInOutQuad(animationProgress);
         const scaledRect = canvasRect.scale(scale);
+        const padding = 3;
         p.strokeWeight(1);
         p.rect(
-          scaledRect.topLeft.x,
-          scaledRect.topLeft.y,
-          scaledRect.width - 2, // TODO: fix this (-2)
-          scaledRect.height - 2
+          scaledRect.topLeft.x + padding,
+          scaledRect.topLeft.y + padding,
+          Math.max(scaledRect.width - 2 - padding * 2, 0), // TODO: fix this (-2)
+          Math.max(scaledRect.height - 2 - padding * 2, 0),
+          10
         );
       }
     );
