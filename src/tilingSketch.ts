@@ -7,11 +7,13 @@ import { Turtle } from "./Turtle";
 import { IRectangle } from "./Rectangle";
 import { StaggerAnimation } from "./StaggerAnimation";
 import { easeInOutQuad, getQsParam } from "./utils";
+import { Vector } from "./Vector";
 
 const sketch = (p: p5) => {
   const GRID_CELLS_Y = Number(getQsParam("y", "20")),
-    WIDTH = window.innerWidth - 50,
-    HEIGHT = window.innerHeight - 50,
+    PADDING = 3,
+    WIDTH = window.innerWidth,
+    HEIGHT = window.innerHeight,
     GRID_SIZE = new Size(
       Math.round((GRID_CELLS_Y * window.innerWidth) / window.innerHeight),
       GRID_CELLS_Y
@@ -29,7 +31,7 @@ const sketch = (p: p5) => {
     }),
     matrix = new Matrix(GRID_SIZE),
     rectsToDraw: IRectangle[] = [],
-    animation: StaggerAnimation = new StaggerAnimation(12);
+    animation: StaggerAnimation = new StaggerAnimation(10);
 
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
@@ -107,15 +109,22 @@ const sketch = (p: p5) => {
           // 1 - area / (MAX_AREA * gridArea)
         );
         p.fill(color);
+
         const scale = easeInOutQuad(animationProgress);
         const scaledRect = canvasRect.scale(scale);
-        const padding = 3;
+        const direction = [
+          new Vector(1, 0),
+          new Vector(0, 1),
+          new Vector(-1, 0),
+          new Vector(0, -1),
+        ][i % 4];
+
         p.strokeWeight(1);
         p.rect(
-          scaledRect.topLeft.x + padding,
-          scaledRect.topLeft.y + padding,
-          Math.max(scaledRect.width - 2 - padding * 2, 0), // TODO: fix this (-2)
-          Math.max(scaledRect.height - 2 - padding * 2, 0),
+          scaledRect.topLeft.x + PADDING + direction.x * (1 - scale) * 200,
+          scaledRect.topLeft.y + PADDING + direction.y * (1 - scale) * 200,
+          Math.max(scaledRect.width - 2 - PADDING * 2, 0), // TODO: fix this (-2)
+          Math.max(scaledRect.height - 2 - PADDING * 2, 0),
           10
         );
       }
