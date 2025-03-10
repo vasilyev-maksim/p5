@@ -45,14 +45,6 @@ export class RectangleBorderTraveler {
     intervals.forEach((x) => cb(x));
   }
 
-  private range(start: number, end: number): number[] {
-    const step = start < end ? 1 : -1;
-    return Array.from(
-      { length: Math.abs(end - start) + 1 },
-      (_, i) => start + i * step
-    );
-  }
-
   private cyclicSubset<T>(arr: T[], start: number, end: number): T[] {
     let result = [];
     let len = arr.length;

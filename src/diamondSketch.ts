@@ -12,8 +12,8 @@ const sketch = (p: p5) => {
 
   p.draw = () => {
     p.background(0);
-    const d = 3;
-    const n = 10;
+    // const d = 3;
+    // const n = 10;
     // for (let i = 0; i < n; i++) {
     //   drawLightning(p, 0, i * d, W, H + i * d, "violet");
     //   drawLightning(p, W, i * d, 0, H + i * d, "pink");
@@ -32,7 +32,7 @@ const sketch = (p: p5) => {
       steps
     );
     const pLen = traveler.points.length;
-    const midIndex = pLen / 2;
+    // const midIndex = pLen / 2;
     const [intervals, intervals2] = [
       [
         [0, steps],
