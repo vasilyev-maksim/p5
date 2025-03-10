@@ -1,8 +1,9 @@
 import p5 from "p5";
 import { RectangleBorderTraveler } from "./RectangleBorderTraveler";
 
-const W = 600,
-  H = 600;
+const min = Math.min(600, innerWidth, innerHeight),
+  W = min,
+  H = min;
 
 const sketch = (p: p5) => {
   p.setup = () => {
@@ -24,7 +25,6 @@ const sketch = (p: p5) => {
     // const steps = p.floor(
     //   p.map(p.abs((p.frameCount % 120) - 60), 0, 60, 20, 100)
     // );
-    console.log(steps);
     const traveler = new RectangleBorderTraveler(
       p.createVector(0, 0),
       p.createVector(W, H),
@@ -48,7 +48,6 @@ const sketch = (p: p5) => {
       ],
     ] as any;
     const cb = ([a, b]: [p5.Vector, p5.Vector]) => {
-      console.log(a, b);
       drawLightning(p, a.x, a.y, b.x, b.y, "violet");
       // p.line(a.x, a.y, b.x, b.y);
     };
