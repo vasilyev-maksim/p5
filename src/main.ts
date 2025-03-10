@@ -1,5 +1,5 @@
 import p5 from "p5";
-import sketch from "./tilingSketch.ts";
+import sketch from "./diamondSketch.ts";
 
 const canvas = document.getElementById("sketch");
 
