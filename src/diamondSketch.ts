@@ -20,7 +20,7 @@ const sketch = (p: p5) => {
     //   // drawLightning(p, W * 0.11, H * 0.11, W * 0.91, H * 0.91);
     // }
 
-    const steps = 100;
+    const steps = 60;
     // const steps = p.floor(
     //   p.map(p.abs((p.frameCount % 120) - 60), 0, 60, 20, 100)
     // );
