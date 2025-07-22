@@ -71,10 +71,10 @@ const sketch = (p: p5) => {
   };
 
   p.draw = () => {
-    const mouseVec = p.createVector(
-      p.mouseX - CENTER_VEC.x,
-      p.mouseY - CENTER_VEC.y
-    );
+    // const mouseVec = p.createVector(
+    //   p.mouseX - CENTER_VEC.x,
+    //   p.mouseY - CENTER_VEC.y
+    // );
     const angle = (p.frameCount * 2) % 360;
     // const angle = mouseVec.angleBetween(p.createVector(1, 0));
 
