@@ -1,5 +1,15 @@
 import p5 from "p5";
 
+function oscillateBetween(
+  p: p5,
+  start: number,
+  end: number,
+  speed: number
+): number {
+  const t = p.sin(p.frameCount * speed) * 0.5 + 0.5; // от 0 до 1
+  return p.lerp(start, end, t);
+}
+
 class Ring {
   public constructor(
     private readonly center: p5.Vector,
@@ -10,7 +20,6 @@ class Ring {
 
   public render = (p: p5, angle: number) => {
     p.push();
-
     // Перенос системы координат в точку вращения
     p.translate(this.rotationCenter.x, this.rotationCenter.y);
 
@@ -64,11 +73,24 @@ const sketch = (p: p5) => {
       );
     });
 
+  // let flag = 0;
+
   p.setup = () => {
     p.createCanvas(WIDTH, HEIGHT);
     p.noStroke();
     p.angleMode("degrees");
   };
+
+  // let running = true;
+
+  // p.up = () => {
+  //   if (!running) return;
+  //   // everything after this point doesn't run
+  // };
+
+  // p.mousePressed = () => {
+  //   running = !running; // flip the boolean
+  // };
 
   p.draw = () => {
     // const mouseVec = p.createVector(
@@ -81,7 +103,15 @@ const sketch = (p: p5) => {
     p.background("#530984ff");
 
     [...RINGS].reverse().forEach((r, i) => {
-      const delta = 10 * i;
+      // const delta = Math.round((10 * i * (p.frameCount % 100)) / 100);
+      // const speed = oscillateBetween(p, 1, 4, 0.3);
+      const delta = 9 * (i + 1) * oscillateBetween(p, 0, 1, 3);
+      // console.log({ speed, delta });
+      // COOL const delta = 10 * i * oscillateBetween(p, 0, 1, p.frameCount, 4);
+      // COOL const delta = 10 * i * oscillateBetween(p, 0, 1, p.frameCount, 3);
+      // COOL const delta = 10 * i * oscillateBetween(p, 0, 1, p.frameCount, 2);
+      // COOL => const delta = 10 * i * oscillateBetween(p, 0, 1, p.frameCount, 5);
+      // const delta = 50 * i;
       const ang = (angle + delta) * (i % 2 == 0 ? 1 : -1);
       r.render(p, ang);
     });
