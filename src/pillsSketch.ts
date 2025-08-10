@@ -65,8 +65,8 @@ const sketch = (p: p5) => {
       direction: "up" | "down"
     ) {
       const color = p.lerpColor(
-        p.color("#340998ff"),
-        p.color("#ea72f7ff"),
+        p.color("rgba(52, 9, 152, 1)"),
+        p.color("rgba(234, 114, 247, 1)"),
         h / HEIGHT
       );
       console.log(h / HEIGHT, h, HEIGHT);

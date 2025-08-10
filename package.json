@@ -19,7 +19,8 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
-    "p5": "^1.9.0"
+    "p5": "^1.9.0",
+    "p5.sound": "^0.2.0"
   },
   "packageManager": "yarn@3.3.1+sha512.e355f587284d06d2c0c1c2259c68746aa1f1f6cdeedefce543cec206709beeb7951c0a27cdbfb7b5736a576854829af9c660bbe82052192c49f108a546994b71"
 }
