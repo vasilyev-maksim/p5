@@ -1,5 +1,5 @@
 import p5 from "p5";
-import sketch from "./lightningSketch.ts";
+import sketch from "./spiralSketch.ts";
 
 const canvas = document.getElementById("sketch");
 

@@ -1,17 +1,5 @@
 import p5 from "p5";
 
-function linearOscillateBetween(
-  p: p5,
-  min: number,
-  max: number,
-  frequency: number
-): number {
-  const phase = p.frameCount * frequency;
-  const oscillation = Math.sin(phase); // от -1 до 1
-  const normalized = (oscillation + 1) / 2; // от 0 до 1
-  return p.lerp(min, max, normalized);
-}
-
 const sketch = (p: p5) => {
   const WIDTH = window.innerWidth,
     HEIGHT = window.innerHeight,

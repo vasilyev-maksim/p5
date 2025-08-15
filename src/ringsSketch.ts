@@ -1,14 +1,5 @@
 import p5 from "p5";
-
-function oscillateBetween(
-  p: p5,
-  start: number,
-  end: number,
-  speed: number
-): number {
-  const t = p.sin(p.frameCount * speed) * 0.5 + 0.5; // от 0 до 1
-  return p.lerp(start, end, t);
-}
+import { oscillateBetween } from "./utils";
 
 class Ring {
   public constructor(

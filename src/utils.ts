@@ -1,3 +1,6 @@
+import p5 from "p5";
+import p5 from "p5";
+
 export function getQsParam(key: string, defaultValue?: string) {
   return new URLSearchParams(window.location.search).get(key) || defaultValue;
 }
@@ -171,4 +174,35 @@ export function getGrid2D(args: GetGrid2DArgs): Grid2DCallbackArgs[] {
     },
   });
   return grid;
+}
+export function getRandomPartition(
+  n: number,
+  minPart: number,
+  maxPart: number
+): number[] {
+  if (n <= 0) {
+    return [];
+  }
+  const part = Math.floor(minPart + Math.random() * (maxPart - minPart));
+  return [part, ...getRandomPartition(n - part, minPart, maxPart)];
+}
+export function oscillateBetween(
+  p: p5,
+  start: number,
+  end: number,
+  speed: number
+): number {
+  const t = p.sin(p.frameCount * speed) * 0.5 + 0.5; // от 0 до 1
+  return p.lerp(start, end, t);
+}
+function linearOscillateBetween(
+  p: p5,
+  min: number,
+  max: number,
+  frequency: number
+): number {
+  const phase = p.frameCount * frequency;
+  const oscillation = Math.sin(phase); // от -1 до 1
+  const normalized = (oscillation + 1) / 2; // от 0 до 1
+  return p.lerp(min, max, normalized);
 }

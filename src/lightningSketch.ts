@@ -1,23 +1,11 @@
 import p5 from "p5";
 
-export function getRandomPartition(
-  n: number,
-  minPart: number,
-  maxPart: number
-): number[] {
-  if (n <= 0) {
-    return [];
-  }
-  const part = Math.floor(minPart + Math.random() * (maxPart - minPart));
-  return [part, ...getRandomPartition(n - part, minPart, maxPart)];
-}
-
 const sketch = (p: p5) => {
   const WIDTH = window.innerWidth,
     HEIGHT = window.innerHeight,
-    Y_SIZE = 55,
+    Y_SIZE = 30,
     POINTS_PER_LINE = 5,
-    X_DISPERSION = 0.5,
+    X_DISPERSION = 0.3,
     SPEED = 10,
     Y_DELTA = HEIGHT / Y_SIZE,
     CURVES_COUNT = 1,

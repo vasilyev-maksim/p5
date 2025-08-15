@@ -1,16 +1,5 @@
 import p5 from "p5";
-
-export function getRandomPartition(
-  n: number,
-  minPart: number,
-  maxPart: number
-): number[] {
-  if (n <= 0) {
-    return [];
-  }
-  const part = Math.floor(minPart + Math.random() * (maxPart - minPart));
-  return [part, ...getRandomPartition(n - part, minPart, maxPart)];
-}
+import { getRandomPartition } from "./utils";
 
 const sketch = (p: p5) => {
   const WIDTH = window.innerWidth,
