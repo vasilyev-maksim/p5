@@ -31,18 +31,18 @@ const sketch = (p: p5) => {
     });
   }
 
-  function drawCircle([d, angle]: [number, number]) {
-    const x = d * p.cos(angle);
-    const y = d * p.sin(angle);
-    p.circle(WIDTH / 2 + x, HEIGHT / 2 + y, d);
-  }
+  // function drawCircle([d, angle]: [number, number]) {
+  //   const x = d * p.cos(angle);
+  //   const y = d * p.sin(angle);
+  //   p.circle(WIDTH / 2 + x, HEIGHT / 2 + y, d);
+  // }
 
-  function drawSquare([d, angle]: [number, number]) {
-    const x = d * p.cos(angle);
-    const y = d * p.sin(angle);
-    const s = d / 3;
-    p.square(WIDTH / 2 + x, HEIGHT / 2 + y, s);
-  }
+  // function drawSquare([d, angle]: [number, number]) {
+  //   const x = d * p.cos(angle);
+  //   const y = d * p.sin(angle);
+  //   const s = d / 3;
+  //   p.square(WIDTH / 2 + x, HEIGHT / 2 + y, s);
+  // }
 
   function drawPolygon([d, angle]: [number, number]) {
     const x = d * p.cos(angle) + WIDTH / 2;
@@ -79,8 +79,6 @@ const sketch = (p: p5) => {
       p.fill(color);
       return drawPolygon(x);
     });
-
-    const d = 300;
   };
 
   p.mouseClicked = () => N++;
