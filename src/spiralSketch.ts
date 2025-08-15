@@ -7,7 +7,7 @@ const sketch = (p: p5) => {
     ANGULAR_SPEED = 2,
     BRUSH_SPEED = 10;
 
-  let time = 0;
+  // let time = 0;
 
   p.setup = () => {
     p.createCanvas(WIDTH, HEIGHT);
