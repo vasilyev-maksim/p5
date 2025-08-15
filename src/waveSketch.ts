@@ -51,7 +51,7 @@ const sketch = (p: p5) => {
         p.sin(p.frameCount * Y_SPD) * _y_ampl - _y_ampl / 2,
         HEIGHT
       );
-      const t = (p.frameCount % 100) / 100;
+      // const t = (p.frameCount % 100) / 100;
       // const diam = p.lerp(3, 20, t > 0.5 ? 1 - t : t);
       const diam = p.lerp(3, 15, p.mouseX / WIDTH);
       console.log(_x);

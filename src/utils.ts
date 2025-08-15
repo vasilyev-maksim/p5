@@ -194,7 +194,8 @@ export function oscillateBetween(
   const t = p.sin(p.frameCount * speed) * 0.5 + 0.5; // от 0 до 1
   return p.lerp(start, end, t);
 }
-function linearOscillateBetween(
+
+export function linearOscillateBetween(
   p: p5,
   min: number,
   max: number,

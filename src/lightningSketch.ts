@@ -95,11 +95,11 @@ const sketch = (p: p5) => {
 
     function drawLines() {
       for (let j = 0; j < CURVES_COUNT; j++) {
-        const color = p.lerpColor(
-          p.color("rgba(52, 9, 152, 1)"),
-          p.color("rgba(234, 114, 247, 1)"),
-          j / CURVES_COUNT
-        );
+        // const color = p.lerpColor(
+        //   p.color("rgba(52, 9, 152, 1)"),
+        //   p.color("rgba(234, 114, 247, 1)"),
+        //   j / CURVES_COUNT
+        // );
 
         p.stroke("red");
         // p.stroke(color);
