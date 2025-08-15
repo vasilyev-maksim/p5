@@ -4,8 +4,11 @@ const sketch = (p: p5) => {
   const WIDTH = window.innerWidth,
     HEIGHT = window.innerHeight,
     // ANGULAR_SPEED = 1,
+    // ANGULAR_SPEED = 2,
     ANGULAR_SPEED = 2,
-    BRUSH_SPEED = 10;
+    BRUSH_SPEED = 2;
+
+  let N = 1;
 
   // let time = 0;
 
@@ -16,32 +19,71 @@ const sketch = (p: p5) => {
     p.stroke(p.color("rgba(255, 0, 0, 1)"));
     p.strokeWeight(1);
     p.angleMode("degrees");
+    // p.noLoop();
   };
 
   function getNodes(): [number, number][] {
-    return Array.from({ length: 2000 }, (_, i) => {
-      return [i * BRUSH_SPEED, i * ANGULAR_SPEED * p.sin(p.frameCount)];
+    return Array.from({ length: 500 }, (_, i) => {
+      return [
+        i * BRUSH_SPEED,
+        i * ANGULAR_SPEED * p.sin(p.frameCount) + p.frameCount * 1.5,
+      ];
     });
   }
 
-  function drawNode([d, angle]: [number, number], i: number, maxI: number) {
-    const adelta = p.frameCount * 1.5;
-    const x = d * p.cos(angle + adelta);
-    const y = d * p.sin(angle + adelta);
-    const color = p.lerpColor(
+  function drawCircle([d, angle]: [number, number]) {
+    const x = d * p.cos(angle);
+    const y = d * p.sin(angle);
+    p.circle(WIDTH / 2 + x, HEIGHT / 2 + y, d);
+  }
+
+  function drawSquare([d, angle]: [number, number]) {
+    const x = d * p.cos(angle);
+    const y = d * p.sin(angle);
+    const s = d / 3;
+    p.square(WIDTH / 2 + x, HEIGHT / 2 + y, s);
+  }
+
+  function drawPolygon([d, angle]: [number, number]) {
+    const x = d * p.cos(angle) + WIDTH / 2;
+    const y = d * p.sin(angle) + HEIGHT / 2;
+
+    p.push();
+
+    p.translate(x, y);
+    let adelta = 360 / N;
+    p.beginShape();
+    for (let a = 0; a < 360; a += adelta) {
+      let sx = (p.cos(a) * d) / 4;
+      let sy = (p.sin(a) * d) / 4;
+      p.vertex(sx, sy);
+    }
+    p.endShape("close");
+
+    p.pop();
+  }
+
+  function getColor(i: number, maxI: number) {
+    return p.lerpColor(
       p.color("rgba(103, 3, 116, 1)"),
       p.color("rgba(45, 1, 147, 1)"),
       p.sin(p.frameCount * 1 + (i / maxI) * 4 * 360)
     );
-    p.fill(color);
-    p.circle(WIDTH / 2 + x, HEIGHT / 2 + y, d);
   }
 
   p.draw = () => {
     p.background("black");
     const nodes = getNodes();
-    nodes.forEach((x, i, arr) => drawNode(x, i, arr.length));
+    nodes.forEach((x, i, arr) => {
+      const color = getColor(i, arr.length);
+      p.fill(color);
+      return drawPolygon(x);
+    });
+
+    const d = 300;
   };
+
+  p.mouseClicked = () => N++;
   //   if (d > WIDTH) return;
 
   //   const x = d * p.cos(angle);
