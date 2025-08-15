@@ -1,5 +1,4 @@
 import p5 from "p5";
-import p5 from "p5";
 
 export function getQsParam(key: string, defaultValue?: string) {
   return new URLSearchParams(window.location.search).get(key) || defaultValue;

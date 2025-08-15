@@ -10,14 +10,14 @@ const sketch = (p: p5) => {
     Y_DELTA = HEIGHT / Y_SIZE,
     CURVES_COUNT = 1,
     OPACITY = 20,
-    BG = [0, 0, 0],
-    COLORS = [
-      [255, 0, 0],
-      [255, 255, 255],
-      [0, 0, 0],
-      [52, 9, 152],
-      [234, 114, 247],
-    ];
+    BG = [0, 0, 0];
+  // COLORS = [
+  //   [255, 0, 0],
+  //   [255, 255, 255],
+  //   [0, 0, 0],
+  //   [52, 9, 152],
+  //   [234, 114, 247],
+  // ];
   let NODES: [number, number][][] = [];
   let NEXT_NODES: [number, number][][] = [];
 

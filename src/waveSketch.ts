@@ -9,7 +9,7 @@ const sketch = (p: p5) => {
     // Y_DLT = 220,
     Y_AMPL_MIN = 0,
     Y_AMPL_MAX = 35,
-    DIAM = 10,
+    // DIAM = 10,
     X_SPD = 2,
     Y_SPD = 5,
     DLY_MS = 0;
@@ -44,7 +44,7 @@ const sketch = (p: p5) => {
 
     function drawWave(yd: number) {
       const _x = Math.min(p.frameCount * X_SPD, WIDTH);
-      const t1 = ((p.frameCount * 2) % 100) / 100;
+      // const t1 = ((p.frameCount * 2) % 100) / 100;
       // const _y_ampl = p.lerp(Y_AMPL_MIN, Y_AMPL_MAX, t1 > 0.5 ? 1 - t1 : t1);
       const _y_ampl = p.lerp(Y_AMPL_MIN, Y_AMPL_MAX, p.mouseY / HEIGHT);
       const _y = Math.min(
