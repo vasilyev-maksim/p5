@@ -6,7 +6,7 @@ const sketch = (p: p5) => {
     HEIGHT = window.innerHeight,
     GAP_X = 10,
     GAP_Y = 10,
-    PARTS = getRandomPartition(WIDTH, WIDTH / 26, WIDTH / 12);
+    PARTS = getRandomPartition(WIDTH, WIDTH / 26, WIDTH / 10);
 
   p.setup = () => {
     p.createCanvas(WIDTH, HEIGHT);
