@@ -9,8 +9,9 @@ const validSketchNames = Object.keys(sketchFiles).map((path) =>
 const sketchName = window.location.href.split("/").pop() ?? "";
 
 if (validSketchNames.includes(sketchName)) {
-  const { default: sketch } = await import(`./sketches/${sketchName}.ts`);
-  new p5(sketch, canvas!);
+  import(`./sketches/${sketchName}.ts`).then(({ default: sketch }) => {
+    new p5(sketch, canvas!);
+  });
 } else {
   validSketchNames.forEach((x) => {
     const a = document.createElement("a");
