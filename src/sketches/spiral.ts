@@ -8,7 +8,7 @@ const sketch = (p: p5) => {
     ANGULAR_SPEED = 2,
     BRUSH_SPEED = 2;
 
-  let N = 1;
+  let N = 3;
 
   // let time = 0;
 

@@ -1,4 +1,4 @@
 export default {
   // config options
-  base: '/p5'
+  base: '/p5',
 }

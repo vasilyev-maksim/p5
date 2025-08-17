@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { oscillateBetween } from "./utils";
+import { oscillateBetween } from "../utils";
 
 class Ring {
   public constructor(

@@ -1,13 +1,13 @@
 import p5 from "p5";
-import { Grid } from "./Grid";
-import { Point } from "./Point";
-import { Size } from "./Size";
-import { Matrix } from "./Matrix";
-import { Turtle } from "./Turtle";
-import { IRectangle } from "./Rectangle";
-import { StaggerAnimation } from "./StaggerAnimation";
-import { easeInOutQuad, getQsParam } from "./utils";
-import { Vector } from "./Vector";
+import { Grid } from "../Grid";
+import { Point } from "../Point";
+import { Size } from "../Size";
+import { Matrix } from "../Matrix";
+import { Turtle } from "../Turtle";
+import { IRectangle } from "../Rectangle";
+import { StaggerAnimation } from "../StaggerAnimation";
+import { easeInOutQuad, getQsParam } from "../utils";
+import { Vector } from "../Vector";
 
 const sketch = (p: p5) => {
   const GRID_CELLS_Y = Number(getQsParam("y", "20")),

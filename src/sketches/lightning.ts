@@ -3,10 +3,11 @@ import p5 from "p5";
 const sketch = (p: p5) => {
   const WIDTH = window.innerWidth,
     HEIGHT = window.innerHeight,
-    Y_SIZE = 30,
+    Y_SIZE = 20,
+    RANDOMNESS_MODE = "noise", // bates || noise
     POINTS_PER_LINE = 5,
     X_DISPERSION = 0.3,
-    SPEED = 10,
+    SPEED = 30,
     Y_DELTA = HEIGHT / Y_SIZE,
     CURVES_COUNT = 1,
     OPACITY = 20,
@@ -30,18 +31,30 @@ const sketch = (p: p5) => {
         const y = i * Y_DELTA;
         // p.line(0, y, WIDTH, y);
 
-        const xs = [];
-        for (let j = 0; j < POINTS_PER_LINE; j++) {
-          const node = p.random(
+        if (RANDOMNESS_MODE == "noise") {
+          console.log(i + p.frameCount);
+          const x = p.map(
+            p.noise(i, l, (p.frameCount * 0.1) / SPEED),
+            0,
+            1,
             (WIDTH / 2) * (1 - X_DISPERSION),
             (WIDTH / 2) * (1 + X_DISPERSION)
           );
-          xs.push(node);
-          // p.circle(node, y, 10);
-        }
+          arr.push([x, y]);
+        } else {
+          const xs = [];
+          for (let j = 0; j < POINTS_PER_LINE; j++) {
+            const node = p.random(
+              (WIDTH / 2) * (1 - X_DISPERSION),
+              (WIDTH / 2) * (1 + X_DISPERSION)
+            );
+            xs.push(node);
+            // p.circle(node, y, 10);
+          }
 
-        const avgX = xs.reduce((acc, x) => acc + x, 0) / POINTS_PER_LINE;
-        arr.push([avgX, y]);
+          const avgX = xs.reduce((acc, x) => acc + x, 0) / POINTS_PER_LINE;
+          arr.push([avgX, y]);
+        }
       }
       nodes.push(arr);
     }
@@ -64,7 +77,6 @@ const sketch = (p: p5) => {
   };
 
   p.draw = () => {
-    console.log(NEXT_NODES);
     if (p.frameCount % SPEED === 0) {
       NEXT_NODES = getNextNodes();
     }
@@ -82,11 +94,8 @@ const sketch = (p: p5) => {
     function penderNodesDeltaPerFrame() {
       NODES = NODES.map((arr, j) =>
         arr.map(([x, y], i) => {
-          const nextX = NEXT_NODES[j][i][0];
+          const nextX = p.mouseIsPressed ? WIDTH / 2 : NEXT_NODES[j][i][0];
           const distance = nextX - x;
-          if (i == 2) {
-            // console.log(distance);
-          }
           const newX = x + distance / SPEED;
           return [newX, y];
         })
