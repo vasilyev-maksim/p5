@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { getRandomPartition } from "./utils";
+import { getRandomPartition } from "../utils";
 
 const sketch = (p: p5) => {
   const WIDTH = window.innerWidth,

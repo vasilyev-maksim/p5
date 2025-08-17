@@ -1,6 +1,6 @@
 import p5 from "p5";
-import { createShader } from "./shader";
-import { grid2D } from "./utils";
+import { createShader } from "../shader";
+import { grid2D } from "../utils";
 
 const sketch = (p: p5) => {
   let myShader: p5.Shader;

@@ -1,5 +1,5 @@
 import p5 from "p5";
-import sketch from "./spiralSketch.ts";
+import sketch from "./sketches/moverSketch.ts";
 
 const canvas = document.getElementById("sketch");
 

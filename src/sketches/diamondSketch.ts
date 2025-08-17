@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { RectangleBorderTraveler } from "./RectangleBorderTraveler";
+import { RectangleBorderTraveler } from "../RectangleBorderTraveler";
 
 const min = Math.min(600, innerWidth, innerHeight),
   W = min,
